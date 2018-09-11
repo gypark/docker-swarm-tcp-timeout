@@ -1,0 +1,36 @@
+version: "3.6"
+services:
+
+  server:
+    image: gypark/tcp_server:1.0
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - net
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.hostname == HOST1
+      restart_policy:
+        condition: none
+
+  client:
+    image: gypark/tcp_client:1.0
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - net
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == HOST2
+      restart_policy:
+        condition: none
+
+networks:
+  net:
+    driver: overlay
+    attachable: true

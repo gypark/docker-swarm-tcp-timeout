@@ -1,0 +1,10 @@
+FROM perl:5.26
+MAINTAINER Geunyoung Park <gypark@gmail.com>
+
+RUN apt-get update && apt-get install -y net-tools
+
+COPY tcp_server.pl /myapp/tcp_server.pl
+WORKDIR /myapp
+
+ENTRYPOINT [ "perl", "./tcp_server.pl" ]
+
